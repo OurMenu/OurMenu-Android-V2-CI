@@ -49,6 +49,17 @@ local.properties
 /.idea/uiDesigner.xml
 /.idea/gradle.xml
 /.idea/jarRepositories.xml
+.idea/*
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle.kts
+!.idea/copyright
+# Keep the code styles.
+!/.idea/codeStyles
+/.idea/codeStyles/*
+!/.idea/codeStyles/Project.xml
+!/.idea/codeStyles/codeStyleConfig.xml
+
+
 
 # Android Studio
 /*/build/
