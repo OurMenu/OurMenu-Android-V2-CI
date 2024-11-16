@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.IKSEONG_PAT }}
         run: |
           curl -X PATCH \
-            -H "Authorization: Bearer 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" \
+            -H "Authorization: Bearer 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" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -H "User-Agent: OurMenu" \
