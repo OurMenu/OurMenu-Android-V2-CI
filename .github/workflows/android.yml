@@ -33,7 +33,7 @@ jobs:
       - name: rest api 확인
         run: |
           curl -X GET \
-            -H "Authorization: Bearer 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" \
+            -H "Authorization: Bearer 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" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -H "Content-Type: application/json" \
@@ -68,7 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.IKSEONG_PAT }}
         run: |
           curl -X PATCH \
-            -H "Authorization: Bearer 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" \
+            -H "Authorization: Bearer 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" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -H "User-Agent: OurMenu" \
