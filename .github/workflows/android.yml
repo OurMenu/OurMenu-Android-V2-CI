@@ -41,7 +41,7 @@ jobs:
             https://api.github.com/orgs/OurMenu/repos
       - name: rest api 확인4
         env:
-          GITHUB_TOKEN: ${{ github.IKSEONG_PAT }}
+          GITHUB_TOKEN: ${{ secrets.IKSEONG_PAT }}
         run: |
           curl -X GET \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -66,7 +66,7 @@ jobs:
       - name: Close Pull Request on Failure
         #if: failure()  # 이전 단계 중 하나라도 실패했을 경우 실행
         env:
-          GITHUB_TOKEN: ${{ github.IKSEONG_PAT }}
+          GITHUB_TOKEN: ${{ secrets.IKSEONG_PAT }}
         run: |
           curl -X PATCH \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -86,7 +86,7 @@ jobs:
        # if: ${{ failure() }} # 이전 step이 실패한 경우에만 이 step을 실행시키는 syntax
         uses: actions/github-script@v6
         with: # actions(uses)의 파라미터 역할
-          github-token: ${{ github.TOKEN }}
+          github-token: ${{ secrets.IKSEONG_PAT }}
           script: | 
             const pull_number = ${{ github.event.pull_request.number }}
             const updated_title = `[BUILD FAIL] ${{ github.event.pull_request.title }}`
