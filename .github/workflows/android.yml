@@ -31,6 +31,14 @@ jobs:
 
       #- name: 유닛 테스트를 실행한다.
       #  run: ./gradlew test
+      - name: Debug Secrets
+        env:
+          GITHUB_TOKEN: ${{ secrets.IKSEONG_PAT }}
+        run: |
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "GITHUB_TOKEN is not set"
+          else
+            echo "GITHUB_TOKEN is set"
 
       - name: rest api 확인
         run: |
@@ -69,6 +77,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.IKSEONG_PAT }}
           G_TOKEN: ${{ github.IKSEONG_PAT }}
         run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Pull Request Number: ${{ github.event.pull_request.number }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Event Name: ${{ github.event_name }}"
+          echo "GIT TOKEN : $GITHUB_TOKEN, G_TOKEN : $G_TOKEN"
+
           curl -X PATCH \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
@@ -77,11 +91,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"state": "close"}' \
             https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
-            echo "Repository: ${{ github.repository }}"
-            echo "Pull Request Number: ${{ github.event.pull_request.number }}"
-            echo "Actor: ${{ github.actor }}"
-            echo "Event Name: ${{ github.event_name }}"
-            echo "GIT TOKEN : $GITHUB_TOKEN, G_TOKEN : $G_TOKEN"
+
 
       - name: Close PR, if build fails # 빌드 실패시 pr 닫기
        # if: ${{ failure() }} # 이전 step이 실패한 경우에만 이 step을 실행시키는 syntax
