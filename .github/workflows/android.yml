@@ -48,7 +48,7 @@ jobs:
             https://api.github.com/orgs/OurMenu/repos
       - name: rest api 확인4
         env:
-          GITHUB_TOKEN: ${{ variables.IKSEONG_PAT }}
+          GITHUB_TOKEN: ${{ env.IKSEONG_PAT }}
         run: |
           curl -X GET \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
