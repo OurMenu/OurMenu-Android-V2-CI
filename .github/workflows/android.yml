@@ -87,7 +87,6 @@ jobs:
         uses: actions/github-script@v6
         with: # actions(uses)의 파라미터 역할
           github-token: ${{ github.TOKEN }}
-					# octokit 문법 참고
           script: | 
             const pull_number = ${{ github.event.pull_request.number }}
             const updated_title = `[BUILD FAIL] ${{ github.event.pull_request.title }}`
