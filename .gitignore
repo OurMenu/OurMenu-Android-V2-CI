@@ -50,6 +50,7 @@ local.properties
 /.idea/gradle.xml
 /.idea/jarRepositories.xml
 .idea/*
+/.idea/*
 # IDEA/Android Studio project files, because
 # the project can be imported from settings.gradle.kts
 !.idea/copyright
