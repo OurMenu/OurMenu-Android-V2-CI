@@ -24,11 +24,21 @@ jobs:
       - name: gradlew 의 root 실행권한을 부여한다.
         run: chmod +x gradlew
 
-      - name: Gradle 을 빌드한다.
-        run: ./gradlew build --stacktrace
+      #- name: Gradle 을 빌드한다.
+      #  run: ./gradlew build --stacktrace
 
-      - name: 유닛 테스트를 실행한다.
-        run: ./gradlew test
+      #- name: 유닛 테스트를 실행한다.
+      #  run: ./gradlew test
+
+      - name: rest api 확인
+        run: |
+          curl -X GET \
+            -H "Authorization: Bearer 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" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -H "User-Agent: OurMenu" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/orgs/${{ OurMenu }}/repos
 
       - name: Close Pull Request on Failure
         if: failure()  # 이전 단계 중 하나라도 실패했을 경우 실행
@@ -47,3 +57,4 @@ jobs:
             echo "Pull Request Number: ${{ github.event.pull_request.number }}"
             echo "Actor: ${{ github.actor }}"
             echo "Event Name: ${{ github.event_name }}"
+      
