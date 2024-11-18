@@ -3,7 +3,7 @@ name: Android -PR-Target CI
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
+  pull_request_target:
     branches: [ "develop" ]
     
 permissions: write-all
@@ -90,29 +90,5 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"state": "close"}' \
             https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
-
-
-      - name: Close PR, if build fails # 빌드 실패시 pr 닫기
-       # if: ${{ failure() }} # 이전 step이 실패한 경우에만 이 step을 실행시키는 syntax
-        uses: actions/github-script@v6
-        with: # actions(uses)의 파라미터 역할
-          github-token: ${{ github.TOKEN }}
-          script: | 
-            const pull_number = ${{ github.event.pull_request.number }}
-            const updated_title = `[BUILD FAIL] ${{ github.event.pull_request.title }}`
-            await github.rest.pulls.createReview({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pull_number,
-              body: '빌드에 실패했습니다.',
-              event: 'REQUEST_CHANGES'
-            })
-            await github.rest.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pull_number,
-              title: updated_title,
-              state: 'closed'
-            })
 
       
