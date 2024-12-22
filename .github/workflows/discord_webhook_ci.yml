@@ -29,7 +29,7 @@ jobs:
           MODIFIED_BODY_TO_JSON = ${{ toJson(MODIFIED_BODY) }}
 
           # Set the modified body as an environment variable
-          echo "MODIFIED_BODY=$MODIFIED_BODY" >> $GITHUB_ENV
+          echo "MODIFIED_BODY_TO_JSON=$MODIFIED_BODY_TO_JSON" >> $GITHUB_ENV
 
 
       - name: Debug Modified Body
@@ -58,7 +58,7 @@ jobs:
                 },
                 {
                   "name": "내용",
-                  "value": "${{ env.MODIFIED_BODY }}\n\u200B\n\u200B\n"
+                  "value": "${{ env.MODIFIED_BODY_TO_JSON }}\n\u200B\n\u200B\n"
                 }
               ] 
             }
