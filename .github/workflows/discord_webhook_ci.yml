@@ -26,6 +26,7 @@ jobs:
           # Get the PR body and replace newlines with \n
           BODY="${{ github.event.pull_request.body }}"
           MODIFIED_BODY=$(echo "$BODY" | sed ':a;N;$!ba;s/\n/\\n/g')
+          MODIFIED_BODY_TO_JSON = ${{ toJson(MODIFIED_BODY) }}
 
           # Set the modified body as an environment variable
           echo "MODIFIED_BODY=$MODIFIED_BODY" >> $GITHUB_ENV
