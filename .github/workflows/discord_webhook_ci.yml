@@ -1,0 +1,54 @@
+# discord_webhook_ci
+name: discord notifictaion
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request_target:
+    branches: [ "develop" ]
+    types: [opened, reopened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 상황에 맞는 메세지를 결정한다.
+        run: |
+          if [ "${{ github.event.action }}" == "opened" ]; then
+              echo "PR_ACTION_MESSAGE=:blush: PR 생성되었습니다" >> $GITHUB_ENV
+          elif [ "${{ github.event.action }}" == "reopened" ]; then
+              echo "PR_ACTION_MESSAGE=:blush: PR 재생성 되었습니다" >> $GITHUB_ENV
+          elif [ "${{ github.event.action }}" == "synchronize" ]; then
+              echo "PR_ACTION_MESSAGE=:blush: 기존 PR에 commit 이 추가되었습니다" >> $GITHUB_ENV
+          fi
+    
+      - name: Discord notification
+        uses: Ilshidur/action-discord@master
+        env:
+          GITHUB_CONTEXT: ${{ toJSON }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: 개발잡스
+          DISCORD_AVATAR: "https://github.com/user-attachments/assets/a58dea6f-9249-4a74-8d46-35fd3199a980"
+          DISCORD_EMBEDS: '
+          [
+            { 
+              "url": "${{github.event.pull_request.html_url}}",
+              "title": "${{ env.PR_ACTION_MESSAGE }}",
+               
+              "fields": [
+                {
+                  "name": "작업자",
+                  "value": "${{ github.actor }}\n\u200B\n\u200B\n"
+                },
+                {
+                  "name": "제목",
+                  "value": "[${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})"
+                },
+                {
+                  "name": "내용",
+                  "value": "${{ github.event.pull_request.body }}"
+                }
+              ] 
+            }
+          ]'
