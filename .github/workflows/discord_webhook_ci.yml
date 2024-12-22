@@ -21,16 +21,15 @@ jobs:
               echo "PR_ACTION_MESSAGE=:blush: 기존 PR에 commit 이 추가되었습니다" >> $GITHUB_ENV
           fi
 
-      - name: Replace newlines in PR body
+      - name: Replace newlines and convert to JSON
         run: |
           # Get the PR body and replace newlines with \n
-          echo "BODY=${{ github.event.pull_request.body }}" >> $GITHUB_ENV
+          BODY=$(echo "${{ github.event.pull_request.body }}" | sed ':a;N;$!ba;s/\n/\\n/g')
 
-      - name: to json
-        run: |
+          # Convert the modified body to JSON and set it as an environment variable
+          MODIFIED_BODY_TO_JSON=${{ toJson(BODY) }}
+          echo "MODIFIED_BODY_TO_JSON=$MODIFIED_BODY_TO_JSON" >> $GITHUB_ENV
 
-          # Set the modified body as an environment variable
-          echo "MODIFIED_BODY_TO_JSON=${{ toJson(env.BODY) }}" >> $GITHUB_ENV
 
 
       - name: Debug Modified Body
