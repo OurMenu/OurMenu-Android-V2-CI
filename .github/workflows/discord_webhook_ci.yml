@@ -24,15 +24,13 @@ jobs:
       - name: Replace newlines in PR body
         run: |
           # Get the PR body and replace newlines with \n
-          BODY="${{ github.event.pull_request.body }}"
-          echo "BODY=${{ BODY }}" >> $GITHUB_ENV
+          echo "BODY=${{ github.event.pull_request.body }}" >> $GITHUB_ENV
 
       - name: to json
         run: |
-          MODIFIED_BODY_TO_JSON = ${{ toJson(env.BODY) }}
 
           # Set the modified body as an environment variable
-          echo "MODIFIED_BODY_TO_JSON=$MODIFIED_BODY_TO_JSON" >> $GITHUB_ENV
+          echo "MODIFIED_BODY_TO_JSON=${{ toJson(env.BODY) }}" >> $GITHUB_ENV
 
 
       - name: Debug Modified Body
