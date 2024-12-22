@@ -24,10 +24,9 @@ jobs:
       - name: Replace newlines and convert to JSON
         run: |
           # Get the PR body and replace newlines with \n
-          BODY=$(echo "${{ github.event.pull_request.body }}" | sed ':a;N;$!ba;s/\n/\\n/g')
 
           # Convert the modified body to JSON and set it as an environment variable
-          MODIFIED_BODY_TO_JSON=${{ toJson(BODY) }}
+          MODIFIED_BODY_TO_JSON=${{ toJson(github.event.pull_request.body) }}
           echo "MODIFIED_BODY_TO_JSON=$MODIFIED_BODY_TO_JSON" >> $GITHUB_ENV
 
 
