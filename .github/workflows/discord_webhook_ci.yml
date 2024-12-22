@@ -26,7 +26,6 @@ jobs:
       - name: Discord notification
         uses: Ilshidur/action-discord@master
         env:
-          GITHUB_CONTEXT: ${{ toJSON }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_USERNAME: 개발잡스
           DISCORD_AVATAR: "https://github.com/user-attachments/assets/a58dea6f-9249-4a74-8d46-35fd3199a980"
